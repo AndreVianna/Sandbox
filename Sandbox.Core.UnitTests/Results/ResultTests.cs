@@ -51,7 +51,7 @@ public class ResultTests {
         subject.Should().BeAssignableTo<FailedResult>();
         subject.Should().BeAssignableTo<ConflictingResult>();
         var result = subject.Should().BeOfType<ConflictingResult<string>>().Subject;
-        result.Value.Should().Be("Other value");
+        result.ExistingValue.Should().Be("Other value");
     }
 
     [Fact]

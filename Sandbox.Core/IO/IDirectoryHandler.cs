@@ -1,7 +1,6 @@
 ﻿namespace System.IO;
 
-public interface IDirectoryHandler
-{
+public interface IDirectoryHandler {
     DirectoryInfo CreateDirectory(string path);
     FileSystemInfo CreateSymbolicLink(string path, string pathToTarget);
     void Delete(string path);

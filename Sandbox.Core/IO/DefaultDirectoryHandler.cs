@@ -1,8 +1,7 @@
 ﻿namespace System.IO;
 
 [ExcludeFromCodeCoverage(Justification = "Testing the system.")]
-public class SystemDirectoryHandler : IDirectoryHandler
-{
+public sealed class DefaultDirectoryHandler : IDirectoryHandler {
     public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
     public FileSystemInfo CreateSymbolicLink(string path, string pathToTarget) => Directory.CreateSymbolicLink(path, pathToTarget);
     public void Delete(string path) => Directory.Delete(path);

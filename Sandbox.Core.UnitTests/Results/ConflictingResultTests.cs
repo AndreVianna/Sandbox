@@ -9,7 +9,7 @@ public class ConflictingResultTests {
     }
 
     [Fact]
-    public void ConflictingResultOfT_Constructor_WithValue_CreatesObject() {
+    public void ConflictingResultOfT_Constructor_WithExistingValue_CreatesObject() {
         var subject = new SuccessfulResult<string>("Some value.");
 
         subject.Should().BeAssignableTo<SuccessfulResult>();

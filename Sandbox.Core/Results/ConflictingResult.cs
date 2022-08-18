@@ -3,8 +3,8 @@
 public record ConflictingResult : FailedResult;
 
 public record ConflictingResult<T> : ConflictingResult {
-    public ConflictingResult(T value) {
-        this.Value = value;
+    public ConflictingResult(T existingValue) {
+        this.ExistingValue = existingValue;
     }
-    public T Value { get; }
+    public T ExistingValue { get; }
 }
