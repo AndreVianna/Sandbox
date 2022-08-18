@@ -6,7 +6,6 @@ public class ConflictResultTests {
         var subject = new ConflictResult();
 
         subject.Should().NotBeNull();
-        subject.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -16,6 +15,5 @@ public class ConflictResultTests {
         subject.Should().BeAssignableTo<ConflictResult>();
         subject.Should().NotBeNull();
         subject.Value.Should().BeNull();
-        subject.Errors.Should().BeEmpty();
     }
 }

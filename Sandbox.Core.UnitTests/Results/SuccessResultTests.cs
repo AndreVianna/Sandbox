@@ -6,7 +6,6 @@ public class SuccessResultTests {
         var subject = new SuccessResult();
 
         subject.Should().NotBeNull();
-        subject.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -16,6 +15,5 @@ public class SuccessResultTests {
         subject.Should().BeAssignableTo<SuccessResult>();
         subject.Should().NotBeNull();
         subject.Value.Should().Be("Some value.");
-        subject.Errors.Should().BeEmpty();
     }
 }

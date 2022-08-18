@@ -1,9 +1,7 @@
 ﻿namespace System.Results;
 
-public record ValidationErrorResult : FailureResult {
-    public ValidationErrorResult(IEnumerable<Error> errors) : base(errors) {
-        if (Errors.Count == 0) throw new ArgumentException("Collection cannot be empty.", nameof(errors));
-    }
+public record ValidationErrorResult : FailureResultWithErrors {
+    public ValidationErrorResult(IEnumerable<Error> errors) : base(errors) { }
     public ValidationErrorResult(Error error) : base(error) { }
 }
 

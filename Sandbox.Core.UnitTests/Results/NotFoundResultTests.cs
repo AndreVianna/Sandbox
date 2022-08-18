@@ -6,7 +6,6 @@ public class NotFoundResultTests {
         var subject = new NotFoundResult();
 
         subject.Should().NotBeNull();
-        subject.Errors.Should().BeEmpty();
     }
 
     [Fact]
@@ -16,6 +15,5 @@ public class NotFoundResultTests {
         subject.Should().BeAssignableTo<NotFoundResult>();
         subject.Should().NotBeNull();
         subject.Value.Should().BeNull();
-        subject.Errors.Should().BeEmpty();
     }
 }

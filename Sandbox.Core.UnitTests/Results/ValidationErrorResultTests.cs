@@ -51,6 +51,13 @@ public class ValidationErrorResultTests {
     }
 
     [Fact]
+    public void ValidationErrorResult_WithErrorArrayWithNullError_Throws() {
+        var action = () => new ValidationErrorResult(new Error[] { null! });
+
+        action.Should().Throw<ArgumentException>().WithMessage("Collection cannot contain a null element. (Parameter 'errors')");
+    }
+
+    [Fact]
     public void ValidationErrorResultOfT_Record_WithError_Passes() {
         var error = new Error("Error 1");
         var subject = new ValidationErrorResult<string>(error);
