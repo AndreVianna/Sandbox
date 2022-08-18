@@ -7,12 +7,13 @@ public record Pagination {
     public static uint DefaultPageSize { get; private set; } = 20;
 
     public static void Configure(uint pageSize) {
-        DefaultPageSize = pageSize > MaxSize ? MaxSize : pageSize < 1 ? DefaultPageSize : pageSize;
+        if (pageSize < MinSize) return;
+        DefaultPageSize = Math.Min(pageSize, MaxSize);
     }
 
     protected Pagination(uint size = 0) {
-        Size = Math.Min(MaxSize, size < MinSize ? DefaultPageSize : size);
+        Size = size < MinSize ? DefaultPageSize : Math.Min(size, MaxSize);
     }
 
-    public uint Size { get; } = DefaultPageSize;
+    public uint Size { get; }
 }

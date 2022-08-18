@@ -2,7 +2,7 @@
 
 public class ErrorTests {
     [Fact]
-    public void Error_Record_Passes() {
+    public void Error_Constructor_WithAllProperties_CreatesObject() {
         var subject = new Error("Message 1.", "Arg1", "Arg2") {
             Source = "SomeField",
         };
@@ -14,7 +14,7 @@ public class ErrorTests {
     }
 
     [Fact]
-    public void Error_WithMessageOnly_Passes() {
+    public void Error_Constructor_WithMessageOnly_CreatesObject() {
         var subject = new Error("Message 1");
 
         subject.Should().NotBeNull();
@@ -24,7 +24,7 @@ public class ErrorTests {
     }
 
     [Fact]
-    public void Error_WithSourceAndEmptyMessages_Throws() {
+    public void Error_Constructor_WithEmptyMessage_Throws() {
         var action = () => new Error(" ");
 
         action.Should().Throw<ArgumentException>().WithMessage("Message cannot be null or empty. (Parameter 'message')");
