@@ -1,4 +1,5 @@
-﻿namespace System;
+﻿// ReSharper disable UnusedMemberInSuper.Global
+namespace System;
 
 public interface IDateTimeProvider {
     DateTime UtcNow { get; }

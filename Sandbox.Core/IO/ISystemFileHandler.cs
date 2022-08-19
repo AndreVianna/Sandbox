@@ -1,4 +1,6 @@
-﻿namespace System.IO;
+﻿// ReSharper disable UnusedMemberInSuper.Global
+// ReSharper disable UnusedMethodReturnValue.Global
+namespace System.IO;
 
 public interface ISystemFileHandler {
     void AppendAllLines(string path, IEnumerable<string> contents);

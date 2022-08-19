@@ -1,6 +1,7 @@
 ﻿namespace System.IO;
 
 [ExcludeFromCodeCoverage(Justification = "Testing the system.")]
+// ReSharper disable once UnusedType.Global
 public sealed class DefaultFileHandler : ISystemFileHandler {
     public void AppendAllLines(string path, IEnumerable<string> contents) => File.AppendAllLines(path, contents);
     public void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding) => File.AppendAllLines(path, contents, encoding);

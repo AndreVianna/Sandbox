@@ -1,8 +1,6 @@
 ﻿namespace System.Collections;
 
 public class PaginationTests {
-    private readonly object _lockObject = new();
-
     [Fact]
     public void Pagination_Configuration_Passes() {
         var oldValue = Pagination.DefaultPageSize;

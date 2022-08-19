@@ -1,6 +1,6 @@
 ﻿namespace System.IO;
 
-public class DummyDirectoryHandler : IDirectoryHandler {
+public abstract class DummyDirectoryHandler : IDirectoryHandler {
     public virtual DirectoryInfo CreateDirectory(string path) => throw new NotImplementedException();
     public virtual FileSystemInfo CreateSymbolicLink(string path, string pathToTarget) => throw new NotImplementedException();
     public virtual void Delete(string path) => throw new NotImplementedException();

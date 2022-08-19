@@ -1,6 +1,6 @@
 ﻿namespace System.IO;
 
-public class DummyFileHandler : ISystemFileHandler {
+public abstract class DummyFileHandler : ISystemFileHandler {
     public virtual void AppendAllLines(string path, IEnumerable<string> contents) =>  throw new NotImplementedException();
     public virtual void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding) =>  throw new NotImplementedException();
     public virtual Task AppendAllLinesAsync(string path, IEnumerable<string> contents, Encoding encoding, CancellationToken cancellationToken = default) =>  throw new NotImplementedException();

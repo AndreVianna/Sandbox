@@ -1,9 +1,11 @@
 ﻿namespace System.IO;
 
 public class DummyDirectoryHandlerTests {
+    private sealed class TestDirectoryHandler : DummyDirectoryHandler { }
+
     [Fact]
     public void DummyDirectoryHandler_AllMethods_Throw() {
-        var subject = new DummyDirectoryHandler();
+        var subject = new TestDirectoryHandler();
 
         ((Action)(() => subject.CreateDirectory(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.CreateSymbolicLink("", ""))).Should().Throw<NotImplementedException>();
@@ -24,7 +26,7 @@ public class DummyDirectoryHandlerTests {
         ((Action)(() => subject.Exists(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetCreationTime(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetCreationTimeUtc(""))).Should().Throw<NotImplementedException>();
-        ((Action)(() => subject.GetCurrentDirectory())).Should().Throw<NotImplementedException>();;
+        ((Action)(() => subject.GetCurrentDirectory())).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetDirectories(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetDirectories("", ""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetDirectories("", "", new EnumerationOptions()))).Should().Throw<NotImplementedException>();
@@ -42,7 +44,7 @@ public class DummyDirectoryHandlerTests {
         ((Action)(() => subject.GetLastAccessTimeUtc(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetLastWriteTime(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetLastWriteTimeUtc(""))).Should().Throw<NotImplementedException>();
-        ((Action)(() => subject.GetLogicalDrives())).Should().Throw<NotImplementedException>();;
+        ((Action)(() => subject.GetLogicalDrives())).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.GetParent(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.Move("", ""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.ResolveLinkTarget("", false))).Should().Throw<NotImplementedException>();

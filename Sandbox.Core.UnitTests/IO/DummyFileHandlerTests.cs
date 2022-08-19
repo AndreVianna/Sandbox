@@ -1,20 +1,16 @@
-﻿using System.Text;
-
-namespace System.IO;
+﻿namespace System.IO;
 
 public class DummyFileHandlerTests {
+    private sealed class TestFileHandler : DummyFileHandler { }
+
     [Fact]
-    public async Task DummyFileHandler_AllMethods_Throw() {
-        var subject = new DummyFileHandler();
+    public void DummyFileHandler_AllMethods_Throw() {
+        var subject = new TestFileHandler();
 
         ((Action)(() => subject.AppendAllLines("", Array.Empty<string>()))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.AppendAllLines("", Array.Empty<string>(), Encoding.UTF8))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.AppendAllLinesAsync("", Array.Empty<string>(), Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
-        await ((Func<Task>)(() => subject.AppendAllLinesAsync("", Array.Empty<string>()))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.AppendAllText("", ""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.AppendAllText("", "", Encoding.UTF8))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.AppendAllTextAsync("", "", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
-        await ((Func<Task>)(() => subject.AppendAllTextAsync("", ""))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.AppendText(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.Copy("", ""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.Copy("", "", false))).Should().Throw<NotImplementedException>();
@@ -45,15 +41,10 @@ public class DummyFileHandlerTests {
         ((Action)(() => subject.OpenText(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.OpenWrite(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.ReadAllBytes(""))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.ReadAllBytesAsync(""))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.ReadAllLines(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.ReadAllLines("", Encoding.UTF8))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.ReadAllLinesAsync("", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
-        await ((Func<Task>)(() => subject.ReadAllLinesAsync(""))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.ReadAllText("", Encoding.UTF8))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.ReadAllText(""))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.ReadAllTextAsync("", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
-        await ((Func<Task>)(() => subject.ReadAllTextAsync(""))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.ReadLines(""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.ReadLines("", Encoding.UTF8))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.Replace("", "", ""))).Should().Throw<NotImplementedException>();
@@ -67,15 +58,30 @@ public class DummyFileHandlerTests {
         ((Action)(() => subject.SetLastWriteTime("", DateTime.Now))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.SetLastWriteTimeUtc("", DateTime.Now))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.WriteAllBytes("", Array.Empty<byte>()))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.WriteAllBytesAsync("", Array.Empty<byte>()))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.WriteAllLines("", Array.Empty<string>(), Encoding.UTF8))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.WriteAllLines("", Array.Empty<string>()))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.WriteAllLines("", new List<string>(), Encoding.UTF8))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.WriteAllLines("", new List<string>()))).Should().Throw<NotImplementedException>();
-        await ((Func<Task>)(() => subject.WriteAllLinesAsync("", Array.Empty<string>(), Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
-        await ((Func<Task>)(() => subject.WriteAllLinesAsync("", Array.Empty<string>()))).Should().ThrowAsync<NotImplementedException>();
         ((Action)(() => subject.WriteAllText("", ""))).Should().Throw<NotImplementedException>();
         ((Action)(() => subject.WriteAllText("", "", Encoding.UTF8))).Should().Throw<NotImplementedException>();
+    }
+
+    [Fact]
+    public async Task DummyFileHandler_AllAsyncMethods_Throw() {
+        var subject = new TestFileHandler();
+
+        await ((Func<Task>)(() => subject.AppendAllLinesAsync("", Array.Empty<string>(), Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.AppendAllLinesAsync("", Array.Empty<string>()))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.AppendAllTextAsync("", "", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.AppendAllTextAsync("", ""))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.ReadAllBytesAsync(""))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.ReadAllLinesAsync("", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.ReadAllLinesAsync(""))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.ReadAllTextAsync("", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.ReadAllTextAsync(""))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.WriteAllBytesAsync("", Array.Empty<byte>()))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.WriteAllLinesAsync("", Array.Empty<string>(), Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
+        await ((Func<Task>)(() => subject.WriteAllLinesAsync("", Array.Empty<string>()))).Should().ThrowAsync<NotImplementedException>();
         await ((Func<Task>)(() => subject.WriteAllTextAsync("", "", Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();
         await ((Func<Task>)(() => subject.WriteAllTextAsync("", ""))).Should().ThrowAsync<NotImplementedException>();
     }
