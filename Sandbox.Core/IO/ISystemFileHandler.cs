@@ -1,5 +1,7 @@
 ﻿// ReSharper disable UnusedMemberInSuper.Global
 // ReSharper disable UnusedMethodReturnValue.Global
+using Microsoft.Win32.SafeHandles;
+
 namespace System.IO;
 
 public interface ISystemFileHandler {

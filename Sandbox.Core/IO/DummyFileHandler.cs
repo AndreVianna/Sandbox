@@ -1,4 +1,6 @@
-﻿namespace System.IO;
+﻿using Microsoft.Win32.SafeHandles;
+
+namespace System.IO;
 
 public abstract class DummyFileHandler : ISystemFileHandler {
     public virtual void AppendAllLines(string path, IEnumerable<string> contents) =>  throw new NotImplementedException();

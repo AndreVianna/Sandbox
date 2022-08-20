@@ -1,4 +1,7 @@
-﻿namespace System.IO;
+﻿using System.Runtime.Versioning;
+using Microsoft.Win32.SafeHandles;
+
+namespace System.IO;
 
 [ExcludeFromCodeCoverage(Justification = "Testing the system.")]
 // ReSharper disable once UnusedType.Global
