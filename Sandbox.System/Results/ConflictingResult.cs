@@ -4,8 +4,8 @@ public record ConflictingResult : FailedResult;
 
 public record ConflictingResult<T> : ConflictingResult {
     // ReSharper disable once ConvertToPrimaryConstructor
-    public ConflictingResult(T existingValue) {
-        this.ExistingValue = existingValue;
+    public ConflictingResult(T conflictSource) {
+        ConflictSource = conflictSource;
     }
-    public T ExistingValue { get; }
+    public T ConflictSource { get; }
 }

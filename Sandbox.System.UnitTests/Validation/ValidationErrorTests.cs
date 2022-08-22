@@ -1,9 +1,9 @@
-﻿namespace System.Results;
+﻿namespace System.Validation;
 
-public class ErrorTests {
+public class ValidationErrorTests {
     [Fact]
-    public void Error_Constructor_WithAllProperties_CreatesObject() {
-        var subject = new Error("Message 1.", "Arg1", "Arg2") {
+    public void ValidationError_Constructor_WithAllProperties_CreatesObject() {
+        var subject = new ValidationError("Message 1.", "Arg1", "Arg2") {
             Source = "SomeField",
         };
 
@@ -14,8 +14,8 @@ public class ErrorTests {
     }
 
     [Fact]
-    public void Error_Constructor_WithMessageOnly_CreatesObject() {
-        var subject = new Error("Message 1");
+    public void ValidationError_Constructor_WithMessageOnly_CreatesObject() {
+        var subject = new ValidationError("Message 1");
 
         subject.Should().NotBeNull();
         subject.Source.Should().BeEmpty();
@@ -24,8 +24,8 @@ public class ErrorTests {
     }
 
     [Fact]
-    public void Error_Constructor_WithEmptyMessage_Throws() {
-        var action = () => new Error(" ");
+    public void ValidationError_Constructor_WithEmptyMessage_Throws() {
+        var action = () => new ValidationError(" ");
 
         action.Should().Throw<ArgumentException>().WithMessage("Message cannot be null or empty. (Parameter 'message')");
     }

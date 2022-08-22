@@ -1,5 +1,7 @@
 ﻿namespace System.Results;
 
+using Validation;
+
 public class ResultTests {
     [Fact]
     public void Result_Ok_ReturnsSuccessfulResult() {
@@ -51,7 +53,7 @@ public class ResultTests {
         subject.Should().BeAssignableTo<FailedResult>();
         subject.Should().BeAssignableTo<ConflictingResult>();
         var result = subject.Should().BeOfType<ConflictingResult<string>>().Subject;
-        result.ExistingValue.Should().Be("Other value");
+        result.ConflictSource.Should().Be("Other value");
     }
 
     [Fact]
@@ -72,28 +74,28 @@ public class ResultTests {
         subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new Error("Some error.") });
+        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
     }
 
     [Fact]
     public void Result_InvalidBecause_WithError_ReturnsFailedValidationResult() {
-        var subject = Result.InvalidBecause(new Error("Some error."));
+        var subject = Result.InvalidBecause(new ValidationError("Some error."));
 
         subject.Should().BeAssignableTo<IResult>();
         subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new Error("Some error.") });
+        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
     }
 
     [Fact]
     public void Result_InvalidBecause_WithErrorList_ReturnsFailedValidationResult() {
-        var subject = Result.InvalidBecause(new[] { new Error("Some error."), new Error("Other error.") });
+        var subject = Result.InvalidBecause(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
 
         subject.Should().BeAssignableTo<IResult>();
         subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new Error("Some error."), new Error("Other error.") });
+        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
     }
 }

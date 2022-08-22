@@ -1,4 +1,6 @@
-﻿namespace System.Results;
+﻿using System.Validation;
+
+namespace System.Results;
 
 public abstract record Result : IResult {
     public static IResult Ok() {
@@ -26,14 +28,14 @@ public abstract record Result : IResult {
     }
 
     public static IResult InvalidBecause(string error) {
-        return new FailedValidationResult(new Error(error));
+        return new FailedValidationResult(new ValidationError(error));
     }
 
-    public static IResult InvalidBecause(Error error) {
+    public static IResult InvalidBecause(ValidationError error) {
         return new FailedValidationResult(error);
     }
 
-    public static IResult InvalidBecause(IEnumerable<Error> errors) {
+    public static IResult InvalidBecause(IEnumerable<ValidationError> errors) {
         return new FailedValidationResult(errors);
     }
 }
