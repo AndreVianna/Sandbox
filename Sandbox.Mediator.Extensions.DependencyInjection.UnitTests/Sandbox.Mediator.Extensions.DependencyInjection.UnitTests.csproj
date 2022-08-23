@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -27,9 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sandbox.Mediator.BadAssembly.TestUtilities\Sandbox.Mediator.BadAssembly.TestUtilities.csproj" />
     <ProjectReference Include="..\Sandbox.Mediator.Extensions.DependencyInjection\Sandbox.Mediator.Extensions.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Sandbox.Mediator.GoodTestAssembly.TestUtilities\Sandbox.Mediator.GoodAssembly.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

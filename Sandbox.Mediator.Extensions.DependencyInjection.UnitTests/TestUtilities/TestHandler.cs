@@ -1,4 +1,4 @@
-﻿namespace Mediator.GoodAssembly;
+﻿namespace Mediator.TestUtilities;
 
 public class TestHandler : IHandler<TestRequest, TestResponse> {
     public Task<TestResponse> HandleAsync(TestRequest request, CancellationToken cancellationToken = default) {

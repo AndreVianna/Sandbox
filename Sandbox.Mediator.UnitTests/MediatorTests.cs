@@ -1,6 +1,6 @@
-﻿namespace Mediator;
+﻿using Mediator.TestUtilities;
 
-using GoodAssembly;
+namespace Mediator;
 
 public class MediatorTests {
 

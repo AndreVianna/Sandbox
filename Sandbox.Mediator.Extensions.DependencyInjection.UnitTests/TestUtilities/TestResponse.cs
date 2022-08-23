@@ -1,4 +1,4 @@
-﻿namespace Mediator.GoodAssembly;
+﻿namespace Mediator.TestUtilities;
 
 public record TestResponse(string Greeting) {
 }

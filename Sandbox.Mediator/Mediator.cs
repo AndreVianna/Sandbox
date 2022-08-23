@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata;
-
-namespace Mediator;
+﻿namespace Mediator;
 
 public sealed class Mediator : IMediator {
     private readonly IServiceProvider _provider;

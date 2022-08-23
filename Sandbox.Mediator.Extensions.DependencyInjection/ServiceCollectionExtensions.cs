@@ -17,21 +17,26 @@ public static class ServiceCollectionExtensions {
 
     private static IEnumerable<(Type Service, Type Implementtion)> FindHandlers(Assembly assembly) {
         var query = from t in assembly.ExportedTypes
-                        let interfaces = t.GetTypeInfo().ImplementedInterfaces.ToArray()
-                        where IsHandler(interfaces)
-                        select (Service: interfaces[0], Implementation: t);
+            let interfaces = t.GetTypeInfo().ImplementedInterfaces.ToArray()
+            where ImplementsIHandler(interfaces)
+            select (Service: interfaces[0], Implementation: t);
 
         var handlers = query.ToArray();
-        var duplicatedHandler = handlers.GroupBy(x => x.Service).FirstOrDefault(g => g.Count() > 1);
-        if (duplicatedHandler == null) return handlers;
+        EnsureUniqueness(handlers);
+        return handlers;
+    }
 
-        var types = string.Join(",", duplicatedHandler.Key.GenericTypeArguments.Select(t => t.Name));
-        throw new InvalidOperationException($"Duplicate handler found for IHandler<{types}>.");
+    private static bool ImplementsIHandler(IReadOnlyList<Type> interfaces) =>
+        interfaces.Count > 0
+        && interfaces[0].IsGenericType
+        && (interfaces[0].GetGenericTypeDefinition() == typeof(IHandler<,>)
+            || interfaces[0].GetGenericTypeDefinition() == typeof(IHandler<>));
 
-        static bool IsHandler(IReadOnlyList<Type> interfaces) =>
-            interfaces.Count > 0
-            && interfaces[0].IsGenericType
-            && (interfaces[0].GetGenericTypeDefinition() == typeof(IHandler<,>)
-                || interfaces[0].GetGenericTypeDefinition() == typeof(IHandler<>));
+    internal static void EnsureUniqueness(IEnumerable<(Type Service, Type Implementation)> handlers) {
+        var duplicatedHandlers = handlers.GroupBy(x => x.Service).FirstOrDefault(g => g.Count() > 1);
+        if (duplicatedHandlers == null) return;
+        var types = string.Join(",", duplicatedHandlers.Key.GenericTypeArguments.Select(t => t.Name));
+        var implementations = string.Join(", ", duplicatedHandlers.Select(i => i.Implementation.Name));
+        throw new InvalidOperationException($"Duplicate handler found for IHandler<{types}>. Found implementations: {implementations}.");
     }
 }
