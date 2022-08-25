@@ -1,41 +1,61 @@
-﻿using System.Validation;
+﻿namespace System.Results;
 
-namespace System.Results;
+using Validation;
 
-public abstract record Result : IResult {
-    public static IResult Ok() {
+public static class Result {
+    public static IResult Success() {
         return new SuccessfulResult();
     }
 
-    public static IResult Ok<T>(T value) {
-        return new SuccessfulResult<T>(value);
+    public static IResult<T> Success<T>(T value) {
+        return new SuccessfulResultFor<T>(value);
     }
 
     public static IResult Exception(Exception exception) {
         return new ExceptionalResult(exception);
     }
 
-    public static IResult AlreadyExists() {
-        return new ConflictingResult();
+    public static IResult<T> Exception<T>(Exception exception) {
+        return new ExceptionalResult<T>(exception);
     }
 
-    public static IResult ConflictsWith<T>(T value) {
-        return new ConflictingResult<T>(value);
+    public static IResult Conflict(string? reason = null) {
+        return new ConflictingResult(reason);
+    }
+
+    public static IResult<T> Conflict<T>(string? reason = null) {
+        return new ConflictingResult<T>(reason);
     }
 
     public static IResult NotFound() {
         return new NotFoundResult();
     }
 
-    public static IResult InvalidBecause(string error) {
+    public static IResult<T> NotFound<T>() {
+        return new NotFoundResult<T>();
+    }
+
+    public static IResult Invalid(string error) {
         return new FailedValidationResult(new ValidationError(error));
     }
 
-    public static IResult InvalidBecause(ValidationError error) {
+    public static IResult Invalid(ValidationError error) {
         return new FailedValidationResult(error);
     }
 
-    public static IResult InvalidBecause(IEnumerable<ValidationError> errors) {
+    public static IResult Invalid(IEnumerable<ValidationError> errors) {
         return new FailedValidationResult(errors);
+    }
+
+    public static IResult<T> Invalid<T>(string error) {
+        return new FailedValidationResult<T>(new ValidationError(error));
+    }
+
+    public static IResult<T> Invalid<T>(ValidationError error) {
+        return new FailedValidationResult<T>(error);
+    }
+
+    public static IResult<T> Invalid<T>(IEnumerable<ValidationError> errors) {
+        return new FailedValidationResult<T>(errors);
     }
 }

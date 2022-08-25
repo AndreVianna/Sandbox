@@ -1,25 +1,22 @@
-﻿namespace System.Results;
+﻿using System.Validation;
 
-using Validation;
+namespace System.Results;
 
 public class ResultTests {
     [Fact]
-    public void Result_Ok_ReturnsSuccessfulResult() {
-        var subject = Result.Ok();
+    public void Result_Success_ReturnsSuccessfulResult() {
+        var subject = Result.Success();
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
         subject.Should().BeOfType<SuccessfulResult>();
     }
 
     [Fact]
-    public void Result_OkOfT_ReturnsSuccessfulResultOfT() {
-        var subject = Result.Ok("Some value");
+    public void Result_SuccessOfT_ReturnsSuccessfulResultOfT() {
+        var subject = Result.Success("Some value");
 
-        subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
-        subject.Should().BeAssignableTo<SuccessfulResult>();
-        var result = subject.Should().BeOfType<SuccessfulResult<string>>().Subject;
+        subject.Should().BeAssignableTo<IResult<string>>();
+        var result = subject.Should().BeOfType<SuccessfulResultFor<string>>().Subject;
         result.Value.Should().Be("Some value");
     }
 
@@ -29,31 +26,40 @@ public class ResultTests {
         var subject = Result.Exception(exception);
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
+        subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<ExceptionalResult>().Subject;
         result.Exception.Should().BeEquivalentTo(exception);
     }
 
     [Fact]
-    public void Result_AlreadyExists_ReturnsConflictingResult() {
-        var subject = Result.AlreadyExists();
+    public void Result_ExceptionOfT_ReturnsExceptionalResult() {
+        var exception = new InvalidOperationException("Some exception.");
+        var subject = Result.Exception<string>(exception);
 
-        subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
-        subject.Should().BeAssignableTo<FailedResult>();
-        subject.Should().BeOfType<ConflictingResult>();
+        subject.Should().BeAssignableTo<IResult<string>>();
+        subject.Should().BeAssignableTo<FailedResult<string>>();
+        var result = subject.Should().BeOfType<ExceptionalResult<string>>().Subject;
+        result.Exception.Should().BeEquivalentTo(exception);
     }
 
     [Fact]
-    public void Result_ConflictsWith_ReturnsConflictingResultOfT() {
-        var subject = Result.ConflictsWith("Other value");
+    public void Result_Conflict_ReturnsConflictingResult() {
+        var subject = Result.Conflict("Some reason.");
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
-        subject.Should().BeAssignableTo<ConflictingResult>();
+        var result = subject.Should().BeOfType<ConflictingResult>().Subject;
+        result.Reason.Should().Be("Some reason.");
+    }
+
+    [Fact]
+    public void Result_ConflictOfT_ReturnsConflictingResultOfT() {
+        var subject = Result.Conflict<string>("Some reason.");
+
+        subject.Should().BeAssignableTo<IResult<string>>();
+        subject.Should().BeAssignableTo<FailedResult<string>>();
         var result = subject.Should().BeOfType<ConflictingResult<string>>().Subject;
-        result.ConflictSource.Should().Be("Other value");
+        result.Reason.Should().Be("Some reason.");
     }
 
     [Fact]
@@ -61,41 +67,76 @@ public class ResultTests {
         var subject = Result.NotFound();
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         subject.Should().BeOfType<NotFoundResult>();
     }
 
     [Fact]
-    public void Result_InvalidBecause_WithMessage_ReturnsFailedValidationResult() {
-        var subject = Result.InvalidBecause("Some error.");
+    public void Result_NotFoundOfT_ReturnsNotFoundResult() {
+        var subject = Result.NotFound<string>();
+
+        subject.Should().BeAssignableTo<IResult<string>>();
+        subject.Should().BeAssignableTo<FailedResult<string>>();
+        subject.Should().BeOfType<NotFoundResult<string>>();
+    }
+
+    [Fact]
+    public void Result_Invalid_WithMessage_ReturnsFailedValidationResult() {
+        var subject = Result.Invalid("Some error.");
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
         result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
     }
 
     [Fact]
-    public void Result_InvalidBecause_WithError_ReturnsFailedValidationResult() {
-        var subject = Result.InvalidBecause(new ValidationError("Some error."));
+    public void Result_Invalid_WithError_ReturnsFailedValidationResult() {
+        var subject = Result.Invalid(new ValidationError("Some error."));
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
         result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
     }
 
     [Fact]
-    public void Result_InvalidBecause_WithErrorList_ReturnsFailedValidationResult() {
-        var subject = Result.InvalidBecause(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
+    public void Result_Invalid_WithErrorList_ReturnsFailedValidationResult() {
+        var subject = Result.Invalid(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
 
         subject.Should().BeAssignableTo<IResult>();
-        subject.Should().BeAssignableTo<Result>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
+        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
+    }
+
+    [Fact]
+    public void Result_InvalidOfT_WithMessage_ReturnsFailedValidationResult() {
+        var subject = Result.Invalid<string>("Some error.");
+
+        subject.Should().BeAssignableTo<IResult<string>>();
+        subject.Should().BeAssignableTo<FailedResult<string>>();
+        var result = subject.Should().BeOfType<FailedValidationResult<string>>().Subject;
+        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
+    }
+
+    [Fact]
+    public void Result_InvalidOfT_WithError_ReturnsFailedValidationResult() {
+        var subject = Result.Invalid<string>(new ValidationError("Some error."));
+
+        subject.Should().BeAssignableTo<IResult<string>>();
+        subject.Should().BeAssignableTo<FailedResult<string>>();
+        var result = subject.Should().BeOfType<FailedValidationResult<string>>().Subject;
+        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
+    }
+
+    [Fact]
+    public void Result_InvalidOfT_WithErrorList_ReturnsFailedValidationResult() {
+        var subject = Result.Invalid<string>(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
+
+        subject.Should().BeAssignableTo<IResult<string>>();
+        subject.Should().BeAssignableTo<FailedResult<string>>();
+        var result = subject.Should().BeOfType<FailedValidationResult<string>>().Subject;
         result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
     }
 }

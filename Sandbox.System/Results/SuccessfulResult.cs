@@ -1,10 +1,10 @@
 ﻿namespace System.Results;
 
-public record SuccessfulResult : Result;
+public record SuccessfulResult : IResult;
 
-public record SuccessfulResult<TValue> : SuccessfulResult, IResult<TValue> {
+public record SuccessfulResultFor<TValue> : IResult<TValue> {
     // ReSharper disable once ConvertToPrimaryConstructor
-    public SuccessfulResult(TValue value) {
+    public SuccessfulResultFor(TValue value) {
         Value = value;
     }
 
