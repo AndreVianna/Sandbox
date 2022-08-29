@@ -1,10 +1,10 @@
 ﻿namespace System;
 
-public class DummyTimeProviderTests {
+public class DummyDateTimeProviderTests {
     private sealed class TestDateTimeProvider : DummyDateTimeProvider { }
 
     [Fact]
-    public void DateTimeProvider_AllProperties_Throw() {
+    public void DummyDateTimeProvider_AllProperties_Throw() {
         var subject = new TestDateTimeProvider();
 
         ((Func<DateTime>)(() => subject.Now)).Should().Throw<NotImplementedException>();
