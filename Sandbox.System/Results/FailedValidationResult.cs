@@ -15,7 +15,7 @@ public record FailedValidationResult : FailedResult {
         : this(new[] { error ?? throw new ArgumentNullException(nameof(error)) }) {
     }
 
-    public IReadOnlyCollection<ValidationError> Errors { get; }
+    public IReadOnlyList<ValidationError> Errors { get; }
 }
 
 public record FailedValidationResult<TValue> : FailedResult<TValue> {
@@ -29,5 +29,5 @@ public record FailedValidationResult<TValue> : FailedResult<TValue> {
         : this(new[] { error ?? throw new ArgumentNullException(nameof(error)) }) {
     }
 
-    public IReadOnlyCollection<ValidationError> Errors { get; }
+    public IReadOnlyList<ValidationError> Errors { get; }
 }

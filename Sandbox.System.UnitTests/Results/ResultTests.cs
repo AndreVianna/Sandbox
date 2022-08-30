@@ -87,7 +87,12 @@ public class ResultTests {
         subject.Should().BeAssignableTo<IResult>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].Message.Arguments.Should().BeEmpty();
+        result.Errors[0].Message.Template.Should().Be("Some error.");
+        result.Errors[0].Message.Formatted.Should().Be("Some error.");
+        result.Errors[0].Source.Should().BeEmpty();
+        result.Errors[0].Code.Should().Be("Some error.");
     }
 
     [Fact]
@@ -97,7 +102,12 @@ public class ResultTests {
         subject.Should().BeAssignableTo<IResult>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].Message.Arguments.Should().BeEmpty();
+        result.Errors[0].Message.Template.Should().Be("Some error.");
+        result.Errors[0].Message.Formatted.Should().Be("Some error.");
+        result.Errors[0].Source.Should().BeEmpty();
+        result.Errors[0].Code.Should().Be("Some error.");
     }
 
     [Fact]
@@ -107,7 +117,17 @@ public class ResultTests {
         subject.Should().BeAssignableTo<IResult>();
         subject.Should().BeAssignableTo<FailedResult>();
         var result = subject.Should().BeOfType<FailedValidationResult>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
+        result.Errors.Should().HaveCount(2);
+        result.Errors[0].Message.Arguments.Should().BeEmpty();
+        result.Errors[0].Message.Template.Should().Be("Some error.");
+        result.Errors[0].Message.Formatted.Should().Be("Some error.");
+        result.Errors[0].Source.Should().BeEmpty();
+        result.Errors[0].Code.Should().Be("Some error.");
+        result.Errors[1].Message.Arguments.Should().BeEmpty();
+        result.Errors[1].Message.Template.Should().Be("Other error.");
+        result.Errors[1].Message.Formatted.Should().Be("Other error.");
+        result.Errors[1].Source.Should().BeEmpty();
+        result.Errors[1].Code.Should().Be("Other error.");
     }
 
     [Fact]
@@ -117,7 +137,12 @@ public class ResultTests {
         subject.Should().BeAssignableTo<IResult<string>>();
         subject.Should().BeAssignableTo<FailedResult<string>>();
         var result = subject.Should().BeOfType<FailedValidationResult<string>>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].Message.Arguments.Should().BeEmpty();
+        result.Errors[0].Message.Template.Should().Be("Some error.");
+        result.Errors[0].Message.Formatted.Should().Be("Some error.");
+        result.Errors[0].Source.Should().BeEmpty();
+        result.Errors[0].Code.Should().Be("Some error.");
     }
 
     [Fact]
@@ -127,7 +152,12 @@ public class ResultTests {
         subject.Should().BeAssignableTo<IResult<string>>();
         subject.Should().BeAssignableTo<FailedResult<string>>();
         var result = subject.Should().BeOfType<FailedValidationResult<string>>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error.") });
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].Message.Arguments.Should().BeEmpty();
+        result.Errors[0].Message.Template.Should().Be("Some error.");
+        result.Errors[0].Message.Formatted.Should().Be("Some error.");
+        result.Errors[0].Source.Should().BeEmpty();
+        result.Errors[0].Code.Should().Be("Some error.");
     }
 
     [Fact]
@@ -137,6 +167,16 @@ public class ResultTests {
         subject.Should().BeAssignableTo<IResult<string>>();
         subject.Should().BeAssignableTo<FailedResult<string>>();
         var result = subject.Should().BeOfType<FailedValidationResult<string>>().Subject;
-        result.Errors.Should().BeEquivalentTo(new[] { new ValidationError("Some error."), new ValidationError("Other error.") });
+        result.Errors.Should().HaveCount(2);
+        result.Errors[0].Message.Arguments.Should().BeEmpty();
+        result.Errors[0].Message.Template.Should().Be("Some error.");
+        result.Errors[0].Message.Formatted.Should().Be("Some error.");
+        result.Errors[0].Source.Should().BeEmpty();
+        result.Errors[0].Code.Should().Be("Some error.");
+        result.Errors[1].Message.Arguments.Should().BeEmpty();
+        result.Errors[1].Message.Template.Should().Be("Other error.");
+        result.Errors[1].Message.Formatted.Should().Be("Other error.");
+        result.Errors[1].Source.Should().BeEmpty();
+        result.Errors[1].Code.Should().Be("Other error.");
     }
 }
