@@ -15,5 +15,5 @@ public record ValidationError {
 
     public string Code { get; init; }
     public string Source { get; init; } = string.Empty;
-    public TemplatedString Message { get; }
+    public ParameterizedString Message { get; }
 }
