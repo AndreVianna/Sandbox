@@ -12,7 +12,7 @@ public class ValidationErrorTests {
         subject.Source.Should().Be("SomeField");
         subject.Code.Should().Be("ERR001T");
         subject.Message.Template.Should().Be("Message 1 {arg1} {arg2}.");
-        subject.Message.Arguments.Should().BeEquivalentTo(new Dictionary<string, object> { ["arg1"] = "Arg1", ["arg2"] = "Arg2" });
+        subject.Message.Arguments.Should().BeEquivalentTo(new[] { "Arg1", "Arg2" });
         subject.Message.Formatted.Should().Be("Message 1 Arg1 Arg2.");
     }
 

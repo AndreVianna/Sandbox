@@ -1,41 +1,24 @@
-﻿using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
+﻿namespace System;
 
-namespace System;
-
-public record struct TemplatedString {
+public readonly record struct TemplatedString : IEquatable<string>, IComparable, IComparable<TemplatedString?>, IComparable<string> {
     public TemplatedString(string template, params object?[] arguments) {
         Template = template;
-        (Formatted, Arguments) = ParseTemplate(template, arguments);
+        Arguments = arguments;
     }
 
     public string Template { get; }
-    public IReadOnlyDictionary<string, object?> Arguments { get; }
-    public string Formatted { get; }
+    public IReadOnlyList<object?> Arguments { get; }
+    public string Formatted => StringFormatter.Format(Template, Arguments);
 
+    public override int GetHashCode() => Formatted.GetHashCode();
+    public bool Equals(TemplatedString other) => Formatted.Equals(other.Formatted);
+    public bool Equals(string? other) => Formatted.Equals(other);
 
-    private static readonly Regex _pattern = new(@"\{+([^\{\}]+)\}+", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    public int CompareTo(TemplatedString? other) => string.CompareOrdinal(Formatted, other?.Formatted);
+    public int CompareTo(string? other) => string.CompareOrdinal(Formatted, other);
+    public int CompareTo(object? other) => other is null ? 1 : throw new ArgumentException("Object must be of type String or TemplatedString.");
 
-    private static (string, IReadOnlyDictionary<string, object?>) ParseTemplate(string template, object?[] arguments) {
-        var matches = _pattern.Matches(template);
-        if (matches.Count == 0) return (template, new Dictionary<string, object?>());
+    public override string ToString() => Formatted;
 
-        var index = 0;
-        var data = new ConcurrentDictionary<string, object?>();
-        var result = template;
-        foreach (var match in matches.Cast<Match>()) {
-            var token = match.Value;
-            var key = token.Replace("{{", "").Replace("}}", "");
-            var include = key.StartsWith("{") && key.EndsWith("}");
-            var replacement = token;
-            if (include) {
-                var value = data.GetOrAdd(match.Groups[1].Value, _ => arguments[index++]);
-                replacement = token.Replace(key, Convert.ToString(value));
-            }
-
-            result = result.Replace(token, replacement.Replace("{{", "{").Replace("}}", "}"));
-        }
-
-        return (result, data.ToDictionary(k => k.Key, v => v.Value));
-    }
+    public static implicit operator string(TemplatedString template) => template.Formatted;
 }
