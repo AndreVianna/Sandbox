@@ -4,7 +4,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace System.IO;
 
-public interface ISystemFileHandler {
+public interface IFileHandler {
     void AppendAllLines(string path, IEnumerable<string> contents);
     void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding);
     Task AppendAllLinesAsync(string path, IEnumerable<string> contents, Encoding encoding, CancellationToken cancellationToken = default);

@@ -67,7 +67,7 @@ public class DummyFileHandlerTests {
     }
 
     [Fact]
-    public async Task DummyFileHandler_AllAsyncMethods_Throw() {
+    public async Task DummyFile_AllAsyncMethods_Throw() {
         var subject = new TestFileHandler();
 
         await ((Func<Task>)(() => subject.AppendAllLinesAsync("", Array.Empty<string>(), Encoding.UTF8))).Should().ThrowAsync<NotImplementedException>();

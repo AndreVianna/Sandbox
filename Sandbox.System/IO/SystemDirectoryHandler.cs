@@ -2,7 +2,7 @@
 
 [ExcludeFromCodeCoverage(Justification = "Testing the system.")]
 // ReSharper disable once UnusedType.Global
-public sealed class DefaultDirectoryHandler : IDirectoryHandler {
+public sealed class SystemDirectoryHandler : IDirectoryHandler {
     public DirectoryInfo CreateDirectory(string path) => Directory.CreateDirectory(path);
     public FileSystemInfo CreateSymbolicLink(string path, string pathToTarget) => Directory.CreateSymbolicLink(path, pathToTarget);
     public void Delete(string path) => Directory.Delete(path);

@@ -1,8 +1,7 @@
 ﻿// ReSharper disable UnusedMemberInSuper.Global
 namespace System;
 
-public interface IDateTimeProvider {
+public interface IClock {
     DateTime UtcNow { get; }
     DateTime Now { get; }
-    DateTime Today { get; }
 }
