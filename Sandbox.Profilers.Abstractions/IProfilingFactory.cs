@@ -1,6 +1,7 @@
 ﻿namespace Sandbox.Profilers;
 
 public interface IProfilingFactory {
-    IProfiler CreateSimpleProfiler(string category);
-    IReporter CreateSimpleReporter();
+    IProfiler CreateProfiler(string category);
+    IProfiler CreateProfiler<T>();
+    IReporter CreateReporter();
 }

@@ -7,7 +7,18 @@ public class ProfilingFactoryTests {
         var loggerFactory = Substitute.For<ILoggerFactory>();
         var factory = new ProfilingFactory(loggerFactory, clock);
 
-        var subject = factory.CreateSimpleProfiler("SomeCategory");
+        var subject = factory.CreateProfiler("SomeCategory");
+
+        subject.Should().BeOfType<SimpleProfiler>();
+    }
+
+    [Fact]
+    public void ProfilingFactory_CreateSimpleProfiler_WithTypeParameter_ReturnsSimpleProfiler() {
+        var clock = Substitute.For<IClock>();
+        var loggerFactory = Substitute.For<ILoggerFactory>();
+        var factory = new ProfilingFactory(loggerFactory, clock);
+
+        var subject = factory.CreateProfiler<ProfilingFactoryTests>();
 
         subject.Should().BeOfType<SimpleProfiler>();
     }
@@ -18,7 +29,7 @@ public class ProfilingFactoryTests {
         var loggerFactory = Substitute.For<ILoggerFactory>();
         var factory = new ProfilingFactory(loggerFactory, clock);
 
-        var subject = factory.CreateSimpleReporter();
+        var subject = factory.CreateReporter();
 
         subject.Should().BeOfType<SimpleReporter>();
     }

@@ -1,8 +1,10 @@
-﻿namespace Sandbox.Profilers;
+﻿using System.Runtime.CompilerServices;
+
+namespace Sandbox.Profilers;
 
 public interface IProfiler {
-    Task ExecuteAsync(string action, Func<Task> executeAsync, bool resumeOnSameThread = false);
-    Task<T> GetAsync<T>(string action, Func<Task<T>> getAsync, bool resumeOnSameThread = false);
-    void Execute(string action, Action execute);
-    T Get<T>(string action, Func<T> get);
+    Task MeasureAsync(Func<Task> executeAsync, [CallerMemberName] string action = "");
+    Task<T> MeasureAsync<T>(Func<Task<T>> getAsync, [CallerMemberName] string action = "");
+    void Measure(Action execute, [CallerMemberName] string action = "");
+    T Measure<T>(Func<T> get, [CallerMemberName] string action = "");
 }

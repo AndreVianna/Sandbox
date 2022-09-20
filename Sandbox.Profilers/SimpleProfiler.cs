@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sandbox.Profilers;
+﻿namespace Sandbox.Profilers;
 
 public class SimpleProfiler : IProfiler {
     private const string _logMessageTemplate = "Executed action: '{Category}.{Action}'. Start time: [{Start:yyyy-MM-dd HH:mm:ss.fffffff}]. Elapsed time: [{ElapsedTime:G}].";
@@ -19,19 +17,19 @@ public class SimpleProfiler : IProfiler {
         Records = new();
     }
 
-    public void Execute(string action, Action execute) {
+    public void Measure(Action execute, [CallerMemberName] string action = "") {
         var start = _clock.UtcNow;
         execute();
         RecordAction(action, start, _clock.UtcNow - start);
     }
 
-    public async Task ExecuteAsync(string action, Func<Task> executeAsync, bool resumeOnSameThread = false) {
+    public async Task MeasureAsync(Func<Task> executeAsync, [CallerMemberName] string action = "") {
         var start = _clock.UtcNow;
-        await executeAsync().ConfigureAwait(resumeOnSameThread);
+        await executeAsync();
         RecordAction(action, start, _clock.UtcNow - start);
     }
 
-    public T Get<T>(string action, Func<T> get) {
+    public T Measure<T>(Func<T> get, [CallerMemberName] string action = "") {
         var start = _clock.UtcNow;
         var result = get();
         RecordAction(action, start, _clock.UtcNow - start);
@@ -39,9 +37,9 @@ public class SimpleProfiler : IProfiler {
         return result;
     }
 
-    public async Task<T> GetAsync<T>(string action, Func<Task<T>> getAsync, bool resumeOnSameThread = false) {
+    public async Task<T> MeasureAsync<T>(Func<Task<T>> getAsync, [CallerMemberName] string action = "") {
         var start = _clock.UtcNow;
-        var result = await getAsync().ConfigureAwait(resumeOnSameThread);
+        var result = await getAsync();
         RecordAction(action, start, _clock.UtcNow - start);
 
         return result;

@@ -11,9 +11,11 @@ public class ProfilingFactory : IProfilingFactory {
         _clock = clock;
     }
 
-    public IProfiler CreateSimpleProfiler(string category) =>
+    public IProfiler CreateProfiler(string category) =>
         _handlers.GetOrAdd(category, _ => new SimpleProfiler(category, _loggerFactory, _clock));
 
-    public IReporter CreateSimpleReporter() =>
+    public IProfiler CreateProfiler<T>() => CreateProfiler(typeof(T).Name);
+
+    public IReporter CreateReporter() =>
         new SimpleReporter(_handlers);
 }

@@ -4,10 +4,7 @@ public class ProfilersRegistrationTests
 {
     [Fact]
 public void ProfilersRegistration_AddSimpleProfilerServices_AddsServices() {
-    var loggerSpy = new LoggerSpy<SimpleProfiler>();
     var fakeLoggerFactory = Substitute.For<ILoggerFactory>();
-    fakeLoggerFactory.CreateLogger(Arg.Any<string>()).Returns(loggerSpy);
-
     var services = new ServiceCollection();
     services.AddSingleton(fakeLoggerFactory);
 
