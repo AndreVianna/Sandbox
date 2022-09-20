@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.Intrinsics.X86;
-
-namespace Sandbox.Profilers;
+﻿namespace Sandbox.Profilers;
 
 public class SimpleProfiler : IProfiler {
     private const string _logMessageTemplate = "Executed action: '{action}'. Start time: [{start:yyyy-MM-dd HH:mm:ss.fffffff}]. Elapsed time: [{elapsedTime:G}].";
