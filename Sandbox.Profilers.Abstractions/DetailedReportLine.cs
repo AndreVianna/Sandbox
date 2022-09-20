@@ -1,7 +1,7 @@
 ﻿namespace Sandbox.Profilers;
 
-public record ProfilingDetailedReportLine {
-    public ProfilingDetailedReportLine(string category, string action, ProfilingRecord record) {
+public record DetailedReportLine {
+    public DetailedReportLine(string category, string action, ProfilingRecord record) {
         Category = category;
         Action = action;
         Start = record.Start;

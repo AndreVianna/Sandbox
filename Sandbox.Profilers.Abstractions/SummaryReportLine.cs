@@ -2,8 +2,8 @@
 
 namespace Sandbox.Profilers;
 
-public record ProfilingReportSummaryLine {
-    public ProfilingReportSummaryLine(string category, string action, ConcurrentBag<ProfilingRecord> records) {
+public record SummaryReportLine {
+    public SummaryReportLine(string category, string action, ConcurrentBag<ProfilingRecord> records) {
         Category = category;
         Action = action;
         Count = records.Count;

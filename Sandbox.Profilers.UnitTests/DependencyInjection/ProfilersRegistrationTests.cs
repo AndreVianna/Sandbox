@@ -15,8 +15,8 @@ public void ProfilersRegistration_AddSimpleProfilerServices_AddsServices() {
 
     result.Should().BeSameAs(services);
     var provider = services.BuildServiceProvider();
-    var factory = provider.GetRequiredService<IProfilerFactory>();
-    factory.Should().BeOfType<ProfilerFactory>();
+    var factory = provider.GetRequiredService<IProfilingFactory>();
+    factory.Should().BeOfType<ProfilingFactory>();
     var clock = provider.GetRequiredService<IClock>();
     clock.Should().BeOfType<SystemClock>();
 }
