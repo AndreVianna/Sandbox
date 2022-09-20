@@ -1,9 +1,8 @@
-﻿namespace Mediator;
+﻿namespace Mediator.DependencyInjection;
 
-public static class ServiceCollectionExtensions {
-    public static IServiceCollection AddMediatorFrom<T>(this IServiceCollection services) {
-        return AddMediator(services, typeof(T));
-    }
+public static class MediatorRegistration {
+    public static IServiceCollection AddMediatorFrom<T>(this IServiceCollection services) =>
+        AddMediator(services, typeof(T));
 
     public static IServiceCollection AddMediator(this IServiceCollection services, Type markerType) {
         var assembly = markerType.Assembly;
