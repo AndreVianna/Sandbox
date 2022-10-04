@@ -1,6 +1,18 @@
 ﻿namespace System;
 
-public abstract class DummyOutput : IOutput {
+public abstract class DummyOutputWriter : IOutputWriter {
+    public ConsoleColor ForegroundColor {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    public ConsoleColor BackgroundColor {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+    public void ResetColor() => throw new NotImplementedException();
+
     public virtual void Write(bool value) => throw new NotImplementedException();
     public virtual void Write(uint value) => throw new NotImplementedException();
     public virtual void Write(ulong value) => throw new NotImplementedException();

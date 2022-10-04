@@ -1,6 +1,10 @@
 ﻿namespace System;
 
-public interface IOutput {
+public interface IOutputWriter {
+    ConsoleColor ForegroundColor { get; set; }
+    ConsoleColor BackgroundColor { get; set; }
+    void ResetColor();
+
     void Write(bool value);
     void Write(uint value);
     void Write(ulong value);

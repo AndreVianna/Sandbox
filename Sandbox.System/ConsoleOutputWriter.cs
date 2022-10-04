@@ -1,7 +1,19 @@
 ﻿namespace System;
 
 [ExcludeFromCodeCoverage(Justification = "Testing the system.")]
-public sealed class ConsoleOutput : IOutput {
+public sealed class ConsoleOutputWriter : IOutputWriter {
+    public ConsoleColor ForegroundColor {
+        get => Console.ForegroundColor;
+        set => Console.ForegroundColor = value;
+    }
+
+    public ConsoleColor BackgroundColor {
+        get => Console.BackgroundColor;
+        set => Console.BackgroundColor = value;
+    }
+
+    public void ResetColor() => Console.ResetColor();
+
     public void Write(bool value) => Console.Write(value);
     public void Write(ulong value) => Console.Write(value);
     public void Write(uint value) => Console.Write(value);
